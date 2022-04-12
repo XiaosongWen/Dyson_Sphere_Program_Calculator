@@ -7,6 +7,7 @@ const useStyles = makeStyles(() => ({
     header: {
         backgroundColor: "#400CCC",
         height:60,
+        position:'absolute',
     },
     logo: {
         fontFamily: "Work Sans, sans-serif",

@@ -17,22 +17,22 @@ const Item = styled(Paper)(({ theme }) => ({
 export function SearchPane(props: Props) {
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box>
             <Grid container spacing={2}>
-                <Grid item xs={8}>
-                    <Item>xs=8</Item>
+                <Grid container xs={8}>
+                    <Paper>xs=8</Paper>
                 </Grid>
-                <Grid item xs={4}>
-                    <Item>xs=4</Item>
+                <Grid container xs={4}>
+                    <Paper>xs=4</Paper>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid container xs={4}>
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button>One</Button>
                         <Button>Two</Button>
                     </ButtonGroup>
                 </Grid>
-                <Grid item xs={8}>
-                    <Item>xs=8</Item>
+                <Grid  container xs={8}>
+                    <Paper>xs=8</Paper>
                 </Grid>
             </Grid>
         </Box>

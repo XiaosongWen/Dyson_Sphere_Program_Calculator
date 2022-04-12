@@ -5,17 +5,15 @@ import data from "../../asset/dsp/data.json"
 import hash from "../../asset/dsp/hash.json"
 import {Avatar} from "@mui/material";
 import {makeStyles} from "@material-ui/core";
-import "./index.css"
-const  logos = require("../../asset/dsp/icons.png");
+import {Icon} from "../../component/general/Icon";
+const  logoSprite = require("../../asset/dsp/icons.png");
 
 type Props = {
     
 };
 
-const useStyles = makeStyles(() => ({
-    icons: {
-        background: "0px 0px",
-    },
+const useStyles = makeStyles((theme ) => ({
+
 }));
 export function Home(props: Props) {
     const classes = useStyles();
@@ -31,14 +29,13 @@ export function Home(props: Props) {
         <div>
             <Header></Header>
             <SearchPane></SearchPane>
-            <div className="home"></div>
-            <Avatar
-                alt="Remy Sharp"
-                className = {classes.icons}
-                src={logos}
-                sx={{ width: 200, height: 200 }} />
-            {/*<Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />*/}
-            {/*<Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />*/}
+
+            <Icon x={"0px"} y ={"0px"}></Icon>
+            <Icon x={"-64px"} y ={"0px"}></Icon>
+            <Icon x={"-64px"} y ={"-128px"}></Icon>
+            <Icon x={"-192px"} y ={"0px"}></Icon>
+            <Icon x={"-256px"} y ={"0px"}></Icon>
+
         </div>
     );
 };
