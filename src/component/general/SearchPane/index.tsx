@@ -18,23 +18,13 @@ export function SearchPane(props: Props) {
 
     return (
         <Box>
-            <Grid container spacing={2}>
-                <Grid container xs={8}>
-                    <Paper>xs=8</Paper>
-                </Grid>
-                <Grid container xs={4}>
-                    <Paper>xs=4</Paper>
-                </Grid>
-                <Grid container xs={4}>
+
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button>One</Button>
                         <Button>Two</Button>
                     </ButtonGroup>
-                </Grid>
-                <Grid  container xs={8}>
-                    <Paper>xs=8</Paper>
-                </Grid>
-            </Grid>
+
+
         </Box>
 
     );
