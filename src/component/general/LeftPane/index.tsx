@@ -9,7 +9,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import {styled} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import {drawerWidth} from "../../../util/constants";
-
+import Typography from "@mui/material/Typography";
+import {SearchButton} from "../SearchButton";
 
 interface Props  {
     open: boolean;
@@ -56,19 +57,24 @@ export function LeftPane(props: Props) {
                         px: [1],
                     }}
                 >
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Products
+                    </Typography>
+
                     <IconButton onClick={toggleDrawer}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </Toolbar>
                 <Divider />
+                <SearchButton />
+
                 <List component="nav">
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                    <Divider sx={{ my: 1 }} />
                     <ListItemButton>
                         <ListItemIcon>
                             <DashboardIcon />

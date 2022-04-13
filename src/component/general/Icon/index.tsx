@@ -1,35 +1,41 @@
-import React from 'react';
-import {Avatar} from "@mui/material";
+import React, {useRef} from 'react';
+import {Avatar, Button} from "@mui/material";
 import {makeStyles} from "@material-ui/core";
+import IconButton from "@mui/material/IconButton";
 
 const  logoSprite = require("../../../asset/dsp/icons.png");
 
 interface Props {
-    x: string;
-    y: string;
-};
+    position: string;
+    name: string;
+    select: (s: string) => void;
+}
 const useStyles = makeStyles(() => ({
     icons: {
         backgroundImage: `url(${logoSprite})`,
+        // backgroundColor: "black",
         backgroundRepeat: "no-repeat",
-        display: 'flex',
+        // display: 'flex',
         height:64,
         width:64,
     },
 }));
 export function Icon(props: Props) {
-    const {x, y} = props;
-    const classes = useStyles({x, y});
+    const {position, name, select} = props;
+    const classes = useStyles();
+
+    const clickIcon = (e: any) => {
+        select(e.target.value);
+    }
+
     return (
-        <div>
-            <Avatar
-                sx={{ width: 64, height: 64}}
-                variant="square" >
-                <div
-                    className = {classes.icons}
-                    style={{backgroundPosition : x, backgroundPositionY:y}}>
-                </div>
-            </Avatar>
-        </div>
+            <IconButton
+                onClick={clickIcon}
+                value = {name}
+                className = {classes.icons}
+                style={{backgroundPosition : position}}
+            >
+            </IconButton>
+
     );
-};
+}

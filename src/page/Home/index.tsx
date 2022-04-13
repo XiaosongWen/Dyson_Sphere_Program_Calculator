@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Header} from "../../component/general/Header";
-import {SearchPane} from "../../component/general/SearchPane";
 import data from "../../asset/dsp/data.json"
 import hash from "../../asset/dsp/hash.json"
 import {makeStyles} from "@material-ui/core";
@@ -35,7 +34,7 @@ export function Home(props: Props) {
     const limitations = data['limitations'];
     const recipes = data['recipes'];
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
     };
