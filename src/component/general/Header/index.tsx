@@ -3,8 +3,6 @@ import {Toolbar} from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar/AppBar";
@@ -13,7 +11,7 @@ import {drawerWidth} from "../../../util/constants";
 interface Props  {
     open: boolean;
     toggleDrawer:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -42,11 +40,7 @@ export function Header(props: Props) {
 
     return (
         <AppBar position="absolute" open={open}>
-            <Toolbar
-                // sx={{
-                //     pr: '24px', // keep right padding when drawer closed
-                // }}
-            >
+            <Toolbar>
                 <IconButton
                     edge="start"
                     color="inherit"
@@ -68,11 +62,6 @@ export function Header(props: Props) {
                 >
                     Dyson Sphere Program Calculator
                 </Typography>
-                <IconButton color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <NotificationsNoneIcon />
-                    </Badge>
-                </IconButton>
             </Toolbar>
         </AppBar>
     );

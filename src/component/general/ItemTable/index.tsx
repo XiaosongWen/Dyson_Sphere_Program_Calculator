@@ -33,8 +33,8 @@ export function ItemTable(props: Props) {
     return (
         <div>
             {
-                iconList.map((list) => {
-                    return <IconGroup icons={list} select={chooseItem} />
+                iconList.map((list, index) => {
+                    return <IconGroup key={index} icons={list} select={chooseItem} />
                 })
             }
         </div>

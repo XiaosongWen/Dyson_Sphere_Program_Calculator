@@ -1,23 +1,19 @@
 import React from 'react';
-import {Icon} from "../Icon";
+import {Logo} from "../Logo";
 import {ButtonGroup} from "@mui/material";
 import {makeStyles} from "@material-ui/core";
 
-interface icon{
-    "color": string;
-    "id": string;
-    "position": string;
-}
+import {Icon} from "../../../util/constants"
 
 interface Props {
-    icons: icon[];
+    icons: Icon[];
     select: (s: string) => void;
 }
 const useStyles = makeStyles(() => ({
-    icon: {
-        alignItems:'left',
-        border:"5px solid",
-        backgroundColor:'black',
+    icons: {
+        // alignItems:'left',
+        // border:"5px solid",
+        backgroundColor:'grey',
     },
 }));
 
@@ -25,10 +21,10 @@ export function IconGroup(props: Props) {
     const {icons, select} = props;
     const classes = useStyles();
     return (
-        <ButtonGroup className={classes.icon}>
+        <ButtonGroup className={classes.icons} >
             {
                 icons.map((c) =>
-                    <Icon key={c.id} position={c.position} name={c.id} select={select}/>
+                    <Logo key={c.id} icon={c} select={select}/>
                 )
             }
         </ButtonGroup>

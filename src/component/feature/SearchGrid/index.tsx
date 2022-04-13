@@ -29,7 +29,6 @@ export function SearchGrid(props: Props) {
     useEffect(()=> {
         const filteredItemNames = items.filter(i => i.category === category).map( c => c.id);
         setItems(filteredItemNames);
-        console.log(category);
     }, [category])
     return (
         <Box >
