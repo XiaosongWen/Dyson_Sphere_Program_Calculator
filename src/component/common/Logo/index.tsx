@@ -6,8 +6,8 @@ import {Icon} from "../../../util/Model"
 const  logoSprite = require("../../../asset/dsp/icons.png");
 
 interface Props {
-    icon: Icon,
-    click: (s: string) => void;
+    icon: Icon;
+    click: (name : string) => void;
 }
 const useStyles = makeStyles(() => ({
     icon: {
@@ -24,8 +24,8 @@ export function Logo(props: Props) {
     const {icon, click} = props;
     const classes = useStyles();
 
-    const clickIcon = (e: any) => {
-        click(e.target.value);
+    const clickIcon = () => {
+        click(icon.id);
     }
 
     return (
@@ -38,6 +38,5 @@ export function Logo(props: Props) {
                 }}
             >
             </IconButton>
-
     );
 }

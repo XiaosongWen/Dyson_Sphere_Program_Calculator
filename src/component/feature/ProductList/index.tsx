@@ -1,12 +1,12 @@
 import React from 'react';
 import {Item} from "../../../util/Model";
-import {ShowProduct} from "../../general/ShowProduct";
+import {ShowProduct} from "../ShowProduct";
 
 import List from "@mui/material/List";
 
 interface Props {
     selectedProduct:Item[];
-    removeProduct: (id:string) => void;
+    removeProduct: (item:Item) => void;
 }
 
 export function ProductList(props: Props) {
@@ -15,7 +15,7 @@ export function ProductList(props: Props) {
     return (
         <List>
         {
-            selectedProduct.map(item => <ShowProduct item={item} removeProduct={removeProduct}/>)
+            selectedProduct.map(item => <ShowProduct key={item.id} item={item} removeProduct={removeProduct}/>)
         }
         </List>
     );

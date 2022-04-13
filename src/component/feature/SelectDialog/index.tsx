@@ -6,12 +6,13 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 
 import {ProductGrid} from "../ProductGrid";
+import {Item} from "../../../util/Model";
 
 
 interface Props {
     open: boolean;
     closeSearchGrid:  () => void;
-    addProduct: (i:string) => void;
+    addProduct: (item:Item) => void;
 }
 
 export function SelectDialog(props: Props) {

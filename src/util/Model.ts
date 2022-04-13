@@ -15,10 +15,17 @@ export class Icon{
 export class Category{
     readonly id: string = "";
     readonly name: string = "";
+    private icon: Icon;
 
     constructor(id: string, name: string) {
         this.id = id;
         this.name = name;
+    }
+    setIcon(icon: Icon) {
+        this.icon = icon;
+    }
+    getIcon() {
+        return this.icon;
     }
 }
 export class Item{
@@ -85,17 +92,18 @@ export class Recipe{
 }
 // limitations defaults
 
+
+
+const iconMap = new Map<string, Icon>();
+data['icons'].forEach(i => {
+    const icon = new Icon(i.color, i.id, i.position);
+    iconMap.set(icon.id, icon);
+});
+
 const categories = data['categories'];
 export const AllCategories = categories.map(c => new Category(c.id, c.name));
 
-const icons = data['icons']
-const iconMap = new Map<string, Icon>();
-
-export const AllICons = icons.map(i => {
-    const icon = new Icon(i.color, i.id, i.position);
-    iconMap.set(icon.id, icon);
-    return icon;
-});
+AllCategories.forEach(c => c.setIcon(iconMap.get(c.id)!));
 
 const items = data['items']
 export const itemMap = new Map<string, Item>();

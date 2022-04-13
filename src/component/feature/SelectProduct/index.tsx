@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Button, ButtonGroup} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import {SelectDialog} from "../../feature/SelectDialog";
+import {SelectDialog} from "../SelectDialog";
+import {Item} from "../../../util/Model";
 
 type Props = {
-    addProduct: (i:string) => void;
+    addProduct: (item:Item) => void;
 };
 
 export function SelectProduct(props: Props) {

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Header} from "../../component/general/Header";
+import {Header} from "../../component/feature/Header";
 import {Box, Grid} from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import {LeftPane} from "../../component/general/LeftPane";
+import {LeftPane} from "../../component/feature/LeftPane";
 import {GraphView} from "../../component/feature/GraphView";
 import {TreeView} from "../../component/feature/TreeView";
 

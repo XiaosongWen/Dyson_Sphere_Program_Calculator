@@ -3,37 +3,36 @@ import React, {useEffect, useState} from 'react';
 import {Box} from "@mui/material";
 import Paper from "@mui/material/Paper";
 
-import {ItemTable} from "../../general/ItemTable";
-import {CategoryList} from "../../general/CategoryList";
+import {ItemTable} from "../../common/ItemTable";
+import {CategoryList} from "../../common/CategoryList";
 
-import {AllCategories, AllItems} from "../../../util/Model";
+import {AllCategories, AllItems, Category, Item} from "../../../util/Model";
 
 interface Props {
-    addProduct: (i: string)=>void;
+    addProduct: (item:Item) => void;
     closeSearchGrid:  () => void;
 }
 
 export function ProductGrid(props: Props) {
-    const  {addProduct, closeSearchGrid} = props;
-    const categoriesNames = AllCategories.map( c => c.id);
-    const [category, setCategory] = useState("");
-    const[displayItems, setItems] = useState<string[]>([])
+    const {addProduct, closeSearchGrid} = props;
+    const [category, setCategory] = useState<Category>();
+    const [displayItems, setItems] = useState<Item[]>([])
 
-    const chooseCategory= (c:string)=>{
+    const chooseCategory= (c:Category)=>{
         setCategory(c);
     }
-    const chooseItem= (c:string)=>{
-        addProduct(c);
+    const chooseItem= (item: Item)=>{
+        addProduct(item);
         closeSearchGrid();
     }
     useEffect(()=> {
-        const filteredItemNames = AllItems.filter(i => i.category === category).map( c => c.id);
+        const filteredItemNames = AllItems.filter(i => i.category === category?.id);
         setItems(filteredItemNames);
     }, [category])
     return (
         <Box >
             <Paper elevation={3}>
-                <CategoryList categoriesNames={categoriesNames} chooseCategory={chooseCategory}/>
+                <CategoryList categories={AllCategories} chooseCategory={chooseCategory}/>
                 <ItemTable itemList={displayItems}  chooseItem={chooseItem} />
             </Paper>
         </Box>

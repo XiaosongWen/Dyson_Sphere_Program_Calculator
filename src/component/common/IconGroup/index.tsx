@@ -7,7 +7,7 @@ import {Icon} from "../../../util/Model"
 
 interface Props {
     icons: Icon[];
-    select: (s: string) => void;
+    click: (s: string) => void;
 }
 const useStyles = makeStyles(() => ({
     icons: {
@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 export function IconGroup(props: Props) {
-    const {icons, select} = props;
+    const {icons, click} = props;
     const classes = useStyles();
     return (
         <ButtonGroup className={classes.icons} >
             {
-                icons.map((c) =>
-                    <Logo key={c.id} icon={c} click={select}/>
+                icons.map((i) =>
+                    <Logo key={i.id} icon={i} click={click}/>
                 )
             }
         </ButtonGroup>

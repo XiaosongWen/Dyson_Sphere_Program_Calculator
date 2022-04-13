@@ -3,17 +3,13 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import {styled} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import {drawerWidth} from "../../../util/constants";
 import Typography from "@mui/material/Typography";
 import {SelectProduct} from "../SelectProduct";
 import {Item} from "../../../util/Model";
-import {getItem} from "../../../util/utils";
-import {ProductList} from "../../feature/ProductList";
+import {ProductList} from "../ProductList";
 
 // import {}
 interface Props  {
@@ -52,17 +48,13 @@ export function LeftPane(props: Props) {
     const {open, toggleDrawer} = props;
     const [selectedProduct, setSelectedProduct] = useState<Item[]>([])
 
-    const addProduct = (i: string) => {
-        const item = getItem(i);
-        if (item) {
-            setSelectedProduct(selectedProduct =>[...selectedProduct, item]);
+    const addProduct = (item: Item) => {
+        if (selectedProduct.indexOf(item) === -1) {
+            setSelectedProduct(selectedProduct => [...selectedProduct, item]);
         }
     }
-    const removeProduct = (i: string) => {
-        const item = getItem(i);
-        if (item) {
-            setSelectedProduct(selectedProduct.filter(p => p.id !== i));
-        }
+    const removeProduct = (item: Item) => {
+        setSelectedProduct(selectedProduct.filter(p => p.id !== item.id));
     }
     useEffect(()=>{
         console.log(selectedProduct)
