@@ -4,10 +4,12 @@ import AddIcon from "@mui/icons-material/Add";
 import {SelectDialog} from "../../feature/SelectDialog";
 
 type Props = {
-
+    addProduct: (i:string) => void;
 };
 
 export function SelectProduct(props: Props) {
+    const {addProduct} = props;
+
     const [searchGridOpen, setSearchGridOpen] = useState(false);
 
     const openSearchGrid = () => {
@@ -26,7 +28,7 @@ export function SelectProduct(props: Props) {
                     Units per Minute
                 </Button>
             </ButtonGroup>
-            <SelectDialog open={searchGridOpen} closeSearchGrid={closeSearchGrid}/>
+            <SelectDialog open={searchGridOpen} closeSearchGrid={closeSearchGrid} addProduct={addProduct}/>
         </>
 
     );

@@ -9,10 +9,12 @@ import {CategoryList} from "../../general/CategoryList";
 import {AllCategories, AllItems} from "../../../util/Model";
 
 interface Props {
-    
+    addProduct: (i: string)=>void;
+    closeSearchGrid:  () => void;
 }
 
 export function ProductGrid(props: Props) {
+    const  {addProduct, closeSearchGrid} = props;
     const categoriesNames = AllCategories.map( c => c.id);
     const [category, setCategory] = useState("");
     const[displayItems, setItems] = useState<string[]>([])
@@ -21,7 +23,8 @@ export function ProductGrid(props: Props) {
         setCategory(c);
     }
     const chooseItem= (c:string)=>{
-        console.log("selecting", c);
+        addProduct(c);
+        closeSearchGrid();
     }
     useEffect(()=> {
         const filteredItemNames = AllItems.filter(i => i.category === category).map( c => c.id);
@@ -31,7 +34,7 @@ export function ProductGrid(props: Props) {
         <Box >
             <Paper elevation={3}>
                 <CategoryList categoriesNames={categoriesNames} chooseCategory={chooseCategory}/>
-                <ItemTable itemList={displayItems}  chooseItem={chooseItem}/>
+                <ItemTable itemList={displayItems}  chooseItem={chooseItem} />
             </Paper>
         </Box>
     );

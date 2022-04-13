@@ -7,7 +7,7 @@ const  logoSprite = require("../../../asset/dsp/icons.png");
 
 interface Props {
     icon: Icon,
-    select: (s: string) => void;
+    click: (s: string) => void;
 }
 const useStyles = makeStyles(() => ({
     icon: {
@@ -21,11 +21,11 @@ const useStyles = makeStyles(() => ({
     },
 }));
 export function Logo(props: Props) {
-    const {icon, select} = props;
+    const {icon, click} = props;
     const classes = useStyles();
 
     const clickIcon = (e: any) => {
-        select(e.target.value);
+        click(e.target.value);
     }
 
     return (

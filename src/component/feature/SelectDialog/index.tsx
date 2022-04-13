@@ -10,11 +10,12 @@ import {ProductGrid} from "../ProductGrid";
 
 interface Props {
     open: boolean;
-    closeSearchGrid:  (event: React.MouseEvent<HTMLButtonElement>) => void;
+    closeSearchGrid:  () => void;
+    addProduct: (i:string) => void;
 }
 
 export function SelectDialog(props: Props) {
-    const {open, closeSearchGrid} = props;
+    const {open, closeSearchGrid, addProduct} = props;
 
 
     return (
@@ -34,7 +35,7 @@ export function SelectDialog(props: Props) {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <ProductGrid />
+                <ProductGrid addProduct={addProduct} closeSearchGrid={closeSearchGrid}/>
             </DialogContent>
         </Dialog>
 

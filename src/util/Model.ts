@@ -27,7 +27,7 @@ export class Item{
     readonly name: string = "";
     readonly row: number;
     readonly stack : number;
-
+    icon: Icon;
 
     constructor(category: string, id: string, name: string, row: number, stack: number) {
         this.category = category;
@@ -35,6 +35,9 @@ export class Item{
         this.name = name;
         this.row = row;
         this.stack = stack;
+    }
+    setIcon(icon: Icon) {
+        this.icon = icon;
     }
 }
 export class Fuel extends Item {
@@ -86,19 +89,33 @@ const categories = data['categories'];
 export const AllCategories = categories.map(c => new Category(c.id, c.name));
 
 const icons = data['icons']
-export const AllICons = icons.map(i => new Icon(i.color, i.id, i.position));
+const iconMap = new Map<string, Icon>();
+
+export const AllICons = icons.map(i => {
+    const icon = new Icon(i.color, i.id, i.position);
+    iconMap.set(icon.id, icon);
+    return icon;
+});
 
 const items = data['items']
+export const itemMap = new Map<string, Item>();
 export const AllItems = items.map( i => {
+    let item: Item;
     if (i.fuel) {
-        return new Fuel(i.category, i.id, i.name,
+        item = new Fuel(i.category, i.id, i.name,
             i.row as number, i.stack as number,
             i.fuel.category, i.fuel.value as number);
+    }else if (i.factory) {
+        item = new Factory(i.category,i.id, i.name, i.row as number, i.stack as number,
+            i.factory.speed as number, i.factory.type as string, i.factory.usage as number,
+            i.factory.drain as number, i.factory.modules as number);
+    }else{
+        item = new Item(i.category,i.id, i.name, i.row as number, i.stack as number);
     }
-    if (i.factory) {
-        return new Factory(i.category,i.id, i.name, i.row as number, i.stack as number,
-            i.factory.speed as number, i.factory.type as string, i.factory.usage as number, i.factory.drain as number, i.factory.modules as number);
-    }
-    return new Item(i.category,i.id, i.name, i.row as number, i.stack as number)
+    item.setIcon(iconMap.get(item.id)!);
+    itemMap.set(item.id, item);
+    return item;
 });
+
+
 

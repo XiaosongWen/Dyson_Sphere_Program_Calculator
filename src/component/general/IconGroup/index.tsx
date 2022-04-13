@@ -24,7 +24,7 @@ export function IconGroup(props: Props) {
         <ButtonGroup className={classes.icons} >
             {
                 icons.map((c) =>
-                    <Logo key={c.id} icon={c} select={select}/>
+                    <Logo key={c.id} icon={c} click={select}/>
                 )
             }
         </ButtonGroup>

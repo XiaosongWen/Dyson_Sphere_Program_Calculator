@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -11,6 +11,9 @@ import MuiDrawer from "@mui/material/Drawer";
 import {drawerWidth} from "../../../util/constants";
 import Typography from "@mui/material/Typography";
 import {SelectProduct} from "../SelectProduct";
+import {Item} from "../../../util/Model";
+import {getItem} from "../../../util/utils";
+import {ProductList} from "../../feature/ProductList";
 
 // import {}
 interface Props  {
@@ -47,7 +50,23 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export function LeftPane(props: Props) {
     const {open, toggleDrawer} = props;
-    // const [selectedProduct, setSelectedProduct] = useState<>()
+    const [selectedProduct, setSelectedProduct] = useState<Item[]>([])
+
+    const addProduct = (i: string) => {
+        const item = getItem(i);
+        if (item) {
+            setSelectedProduct(selectedProduct =>[...selectedProduct, item]);
+        }
+    }
+    const removeProduct = (i: string) => {
+        const item = getItem(i);
+        if (item) {
+            setSelectedProduct(selectedProduct.filter(p => p.id !== i));
+        }
+    }
+    useEffect(()=>{
+        console.log(selectedProduct)
+    },[selectedProduct])
     return (
         <div>
             <Drawer variant="permanent" open={open}>
@@ -76,16 +95,11 @@ export function LeftPane(props: Props) {
 
                 <Divider />
 
-                <SelectProduct />
+                <SelectProduct addProduct={addProduct} />
 
-                <List component="nav">
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Orders" />
-                    </ListItemButton>
-                </List>
+                <Divider />
+
+                <ProductList selectedProduct={selectedProduct} removeProduct={removeProduct}/>
             </Drawer>
         </div>
     );
