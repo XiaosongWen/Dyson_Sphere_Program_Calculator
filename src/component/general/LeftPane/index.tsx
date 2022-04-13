@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -10,12 +10,13 @@ import {styled} from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import {drawerWidth} from "../../../util/constants";
 import Typography from "@mui/material/Typography";
-import {SearchButton} from "../SearchButton";
+import {SelectProduct} from "../SelectProduct";
 
+// import {}
 interface Props  {
     open: boolean;
     toggleDrawer:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -46,6 +47,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export function LeftPane(props: Props) {
     const {open, toggleDrawer} = props;
+    // const [selectedProduct, setSelectedProduct] = useState<>()
     return (
         <div>
             <Drawer variant="permanent" open={open}>
@@ -71,8 +73,10 @@ export function LeftPane(props: Props) {
                         <ChevronLeftIcon />
                     </IconButton>
                 </Toolbar>
+
                 <Divider />
-                <SearchButton />
+
+                <SelectProduct />
 
                 <List component="nav">
                     <ListItemButton>

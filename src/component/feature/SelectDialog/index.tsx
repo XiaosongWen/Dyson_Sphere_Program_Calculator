@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 
-import {SearchGrid} from "../SearchGrid";
+import {ProductGrid} from "../ProductGrid";
 
 
 interface Props {
@@ -18,7 +18,7 @@ export function SelectDialog(props: Props) {
 
 
     return (
-        <Dialog open ={open} onClose={closeSearchGrid} maxWidth='lg'>
+        <Dialog open ={open} onClose={closeSearchGrid} maxWidth='md'>
             <DialogTitle>Select an item to produce
                 <IconButton
                     aria-label="close"
@@ -34,7 +34,7 @@ export function SelectDialog(props: Props) {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <SearchGrid />
+                <ProductGrid />
             </DialogContent>
         </Dialog>
 

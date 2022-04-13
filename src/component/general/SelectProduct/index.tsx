@@ -7,7 +7,7 @@ type Props = {
 
 };
 
-export function SearchButton(props: Props) {
+export function SelectProduct(props: Props) {
     const [searchGridOpen, setSearchGridOpen] = useState(false);
 
     const openSearchGrid = () => {

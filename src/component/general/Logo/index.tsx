@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
-import {Icon} from "../../../util/constants"
+import {Icon} from "../../../util/Model"
 
 const  logoSprite = require("../../../asset/dsp/icons.png");
 

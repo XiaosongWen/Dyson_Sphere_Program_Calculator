@@ -6,17 +6,14 @@ import Paper from "@mui/material/Paper";
 import {ItemTable} from "../../general/ItemTable";
 import {CategoryList} from "../../general/CategoryList";
 
-import data from "../../../asset/dsp/data.json";
-
+import {AllCategories, AllItems} from "../../../util/Model";
 
 interface Props {
     
 }
-const categories = data['categories'];
-const items = data['items'];
 
-export function SearchGrid(props: Props) {
-    const categoriesNames = categories.map( c => c.id);
+export function ProductGrid(props: Props) {
+    const categoriesNames = AllCategories.map( c => c.id);
     const [category, setCategory] = useState("");
     const[displayItems, setItems] = useState<string[]>([])
 
@@ -27,7 +24,7 @@ export function SearchGrid(props: Props) {
         console.log("selecting", c);
     }
     useEffect(()=> {
-        const filteredItemNames = items.filter(i => i.category === category).map( c => c.id);
+        const filteredItemNames = AllItems.filter(i => i.category === category).map( c => c.id);
         setItems(filteredItemNames);
     }, [category])
     return (

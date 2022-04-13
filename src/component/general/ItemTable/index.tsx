@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 
-import {Icon} from "../../../util/constants"
-import data from "../../../asset/dsp/data.json";
 import {IconGroup} from "../IconGroup";
+
+import {Icon, AllICons, AllItems} from "../../../util/Model";
 
 interface Props {
     itemList: string[];
     chooseItem: (c:string) => void;
 }
 
-const icons = data['icons'];
-const allItems = data['items']
 
 export function ItemTable(props: Props) {
     const {itemList, chooseItem}= props;
@@ -21,11 +19,11 @@ export function ItemTable(props: Props) {
         let row = 0;
         while (true) {
             // eslint-disable-next-line no-loop-func
-            const tmp = allItems.filter(i => i.row === row && itemList.includes(i.id)).map(i => i.id);
+            const tmp = AllItems.filter(i => i.row === row && itemList.includes(i.id)).map(i => i.id);
             if (tmp.length === 0) {
                 break;
             }
-            list.push(icons.filter(i => tmp.includes(i.id)));
+            list.push(AllICons.filter(i => tmp.includes(i.id)));
             row++;
         }
         setIconList(list);
