@@ -79,6 +79,7 @@ export class Recipe{
     readonly id: string ;
     readonly name: string ;
     readonly in: Map<Item, number>;
+    readonly out: Map<Item, number>;
     readonly time: number;
     readonly producers: Factory[];
 
@@ -86,12 +87,21 @@ export class Recipe{
         this.id = id;
         this.name = name;
         this.in = new Map();
+        this.out = new Map();
         this.time = time;
         this.producers = [];
     }
+    addProducer(f: Factory) {
+        this.producers.push(f);
+    }
+    addIn(item: Item, n: number) {
+        this.in.set(item, n);
+    }
+    addOut(item: Item, n: number) {
+        this.out.set(item, n);
+    }
 }
 // limitations defaults
-
 
 
 const iconMap = new Map<string, Icon>();
@@ -107,6 +117,7 @@ AllCategories.forEach(c => c.setIcon(iconMap.get(c.id)!));
 
 const items = data['items']
 export const itemMap = new Map<string, Item>();
+
 export const AllItems = items.map( i => {
     let item: Item;
     if (i.fuel) {
@@ -124,6 +135,31 @@ export const AllItems = items.map( i => {
     itemMap.set(item.id, item);
     return item;
 });
+export const recipeMap = new Map<string, Recipe> ();
+
+data['recipes'].forEach(r => {
+    const target = itemMap.get(r.id)!;
+    // console.log(target);
+    const recipe: Recipe = new Recipe(r.id, r.name, r.time);
+    if (r.in) {
+        Object.entries(r.in).forEach(p => {
+            recipe.addIn(itemMap.get(p[0])!, p[1] as number);
+        })
+    }
+    if (r.out) {
+        Object.entries(r.out).forEach(p => {
+            recipe.addOut(itemMap.get(p[0])!, p[1] as number);
+        })
+    }else {
+        recipe.addOut(target, 1);
+    }
+    r.producers.forEach(f => {
+        recipe.addProducer(itemMap.get(f) as Factory);
+    })
+    recipeMap.set(r.id, recipe);
+});
+
+
 
 
 

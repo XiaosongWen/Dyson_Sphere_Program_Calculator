@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 
 import {ProductGrid} from "../ProductGrid";
-import {Item} from "../../../util/Model";
+import {Item} from "../../../model/Model";
 
 
 interface Props {

@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import {LeftPane} from "../../component/feature/LeftPane";
 import {GraphView} from "../../component/feature/GraphView";
 import {TreeView} from "../../component/feature/TreeView";
+import {Item} from "../../model/Model";
 
 type Props = {
     
@@ -13,6 +14,11 @@ type Props = {
 
 export function Home(props: Props) {
     const [open, setOpen] = useState(true);
+    const [selectedProduct, setSelectedProduct] = useState<Item[]>([]);
+
+    const updateSelectedList = (list: Item[]) => {
+        setSelectedProduct(list);
+    }
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -20,7 +26,11 @@ export function Home(props: Props) {
     return (
             <Box sx={{ display: 'flex' }}>
                 <Header open={open} toggleDrawer={toggleDrawer}></Header>
-                <LeftPane open={open} toggleDrawer={toggleDrawer}></LeftPane>
+                <LeftPane
+                    open={open}
+                    toggleDrawer={toggleDrawer}
+                    updateSelectedList={updateSelectedList}
+                    selectedProduct={selectedProduct}></LeftPane>
 
                 <Box
                     component="main"
@@ -37,7 +47,7 @@ export function Home(props: Props) {
                     <Toolbar />
                     <Container sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3} xs={12}>
-                            <GraphView/>
+                            <GraphView selectedProduct={selectedProduct}/>
                             <TreeView />
                         </Grid>
                     </Container>

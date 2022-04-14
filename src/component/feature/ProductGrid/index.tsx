@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import {ItemTable} from "../../common/ItemTable";
 import {CategoryList} from "../../common/CategoryList";
 
-import {AllCategories, AllItems, Category, Item} from "../../../util/Model";
+import {AllCategories, AllItems, Category, Item} from "../../../model/Model";
 
 interface Props {
     addProduct: (item:Item) => void;

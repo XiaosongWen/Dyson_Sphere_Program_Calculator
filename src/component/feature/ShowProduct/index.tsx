@@ -1,5 +1,5 @@
 import React from 'react';
-import {Item} from "../../../util/Model";
+import {Item} from "../../../model/Model";
 import {ListItem} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';

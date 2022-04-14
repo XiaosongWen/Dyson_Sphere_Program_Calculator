@@ -1,5 +1,5 @@
 import React from 'react';
-import {Item} from "../../../util/Model";
+import {Item} from "../../../model/Model";
 import {ShowProduct} from "../ShowProduct";
 
 import List from "@mui/material/List";

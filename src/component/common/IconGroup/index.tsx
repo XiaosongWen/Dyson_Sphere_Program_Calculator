@@ -3,7 +3,7 @@ import {Logo} from "../Logo";
 import {ButtonGroup} from "@mui/material";
 import {makeStyles} from "@material-ui/core";
 
-import {Icon} from "../../../util/Model"
+import {Icon} from "../../../model/Model"
 
 interface Props {
     icons: Icon[];

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -8,13 +8,15 @@ import MuiDrawer from "@mui/material/Drawer";
 import {drawerWidth} from "../../../util/constants";
 import Typography from "@mui/material/Typography";
 import {SelectProduct} from "../SelectProduct";
-import {Item} from "../../../util/Model";
+import {Item} from "../../../model/Model";
 import {ProductList} from "../ProductList";
 
 // import {}
 interface Props  {
     open: boolean;
     toggleDrawer:  (event: React.MouseEvent<HTMLButtonElement>) => void;
+    updateSelectedList: (list: Item[]) => void;
+    selectedProduct: Item[];
 }
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -45,20 +47,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export function LeftPane(props: Props) {
-    const {open, toggleDrawer} = props;
-    const [selectedProduct, setSelectedProduct] = useState<Item[]>([])
-
+    const {open, toggleDrawer, updateSelectedList, selectedProduct} = props;
     const addProduct = (item: Item) => {
         if (selectedProduct.indexOf(item) === -1) {
-            setSelectedProduct(selectedProduct => [...selectedProduct, item]);
+            const newList: Item[] = [...selectedProduct, item];
+            updateSelectedList(newList);
         }
     }
     const removeProduct = (item: Item) => {
-        setSelectedProduct(selectedProduct.filter(p => p.id !== item.id));
+        updateSelectedList(selectedProduct.filter(p => p.id !== item.id));
     }
-    useEffect(()=>{
-        console.log(selectedProduct)
-    },[selectedProduct])
     return (
         <div>
             <Drawer variant="permanent" open={open}>

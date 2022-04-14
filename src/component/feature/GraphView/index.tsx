@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Paper from "@mui/material/Paper";
 import {Grid} from "@mui/material";
+import {Item} from "../../../model/Model";
+import {buildGraph} from "../../../util/utils";
 
 interface Props {
-
+    selectedProduct: Item[];
 }
 
 export function GraphView(props: Props) {
+    const {selectedProduct} = props;
+    useEffect(() => {
+        if (selectedProduct.length > 0) {
+            const graph = buildGraph(selectedProduct);
+            console.log(graph);
+        }
+    },[selectedProduct]);
+
     return (
         <Grid item xs={12}>
             <Paper
@@ -17,7 +27,9 @@ export function GraphView(props: Props) {
                     height: 240,
                 }}
             >
-               Graph View
+                {
+                    selectedProduct.map(i=>i.name)
+                }
             </Paper>
         </Grid>
     );

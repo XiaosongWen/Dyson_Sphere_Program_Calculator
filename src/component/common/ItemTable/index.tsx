@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {IconGroup} from "../IconGroup";
 
-import {Icon, AllItems, Item, AllCategories} from "../../../util/Model";
+import {Icon, AllItems, Item} from "../../../model/Model";
 
 interface Props {
     itemList: Item[];

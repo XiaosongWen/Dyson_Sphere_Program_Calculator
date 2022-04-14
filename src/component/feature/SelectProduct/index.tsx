@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, ButtonGroup} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {SelectDialog} from "../SelectDialog";
-import {Item} from "../../../util/Model";
+import {Item} from "../../../model/Model";
 
 type Props = {
     addProduct: (item:Item) => void;

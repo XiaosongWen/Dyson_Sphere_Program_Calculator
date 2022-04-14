@@ -1,7 +1,7 @@
 import React from 'react';
 import {IconGroup} from "../IconGroup";
 
-import {AllCategories, Category} from "../../../util/Model";
+import {AllCategories, Category} from "../../../model/Model";
 
 interface Props {
     categories: Category[];
