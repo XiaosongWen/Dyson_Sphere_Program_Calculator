@@ -9,7 +9,7 @@ import {TreeView} from "../../component/feature/TreeView";
 import {Item} from "../../model/Model";
 
 type Props = {
-    
+
 };
 
 export function Home(props: Props) {
@@ -48,7 +48,7 @@ export function Home(props: Props) {
                     <Container sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3} xs={12}>
                             <GraphView selectedProduct={selectedProduct}/>
-                            <TreeView />
+                            {/*<TreeView />*/}
                         </Grid>
                     </Container>
                 </Box>
