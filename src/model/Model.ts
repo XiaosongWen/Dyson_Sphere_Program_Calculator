@@ -103,7 +103,6 @@ export class Recipe{
 }
 // limitations defaults
 
-
 const iconMap = new Map<string, Icon>();
 data['icons'].forEach(i => {
     const icon = new Icon(i.color, i.id, i.position);
@@ -135,11 +134,9 @@ export const AllItems = items.map( i => {
     itemMap.set(item.id, item);
     return item;
 });
-export const recipeMap = new Map<string, Recipe> ();
+export const AllRecipes: Recipe[] = [];
 
 data['recipes'].forEach(r => {
-    const target = itemMap.get(r.id)!;
-    // console.log(target);
     const recipe: Recipe = new Recipe(r.id, r.name, r.time);
     if (r.in) {
         Object.entries(r.in).forEach(p => {
@@ -151,12 +148,12 @@ data['recipes'].forEach(r => {
             recipe.addOut(itemMap.get(p[0])!, p[1] as number);
         })
     }else {
-        recipe.addOut(target, 1);
+        recipe.addOut(itemMap.get(r.id)!, 1);
     }
     r.producers.forEach(f => {
         recipe.addProducer(itemMap.get(f) as Factory);
     })
-    recipeMap.set(r.id, recipe);
+    AllRecipes.push(recipe);
 });
 
 

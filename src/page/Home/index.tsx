@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {Header} from "../../component/feature/Header";
 import {Box, Grid} from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
 import {LeftPane} from "../../component/feature/LeftPane";
 import {GraphView} from "../../component/feature/GraphView";
 import {TreeView} from "../../component/feature/TreeView";
 import {Item} from "../../model/Model";
+
 
 type Props = {
 
@@ -21,7 +21,7 @@ export function Home(props: Props) {
     }
     const toggleDrawer = () => {
         setOpen(!open);
-    };
+    }
 
     return (
             <Box sx={{ display: 'flex' }}>
@@ -45,12 +45,10 @@ export function Home(props: Props) {
                     }}
                 >
                     <Toolbar />
-                    <Container sx={{ mt: 4, mb: 4 }}>
-                        <Grid container spacing={3} xs={12}>
+                    <Grid container  spacing={2}>
                             <GraphView selectedProduct={selectedProduct}/>
-                            {/*<TreeView />*/}
-                        </Grid>
-                    </Container>
+                            <TreeView selectedData={selectedProduct}/>
+                    </Grid>
                 </Box>
             </Box>
     );
