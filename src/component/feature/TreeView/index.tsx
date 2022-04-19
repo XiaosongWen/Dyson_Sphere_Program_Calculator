@@ -81,16 +81,23 @@ export function TreeView(props: Props) {
                 const y = pos[1].substring(0, pos[1].length - 2);
                 return "translate(" + x + "," + y + ")";
             })
-        node.append("text")
+        node.filter((d) => (d.data as TreeNode).factory !== undefined)
+            .append("text")
             .attr('x', -40)
             .attr("y", -20 )
             .style("text-anchor", "middle")
             .text((d) => (d.data as TreeNode).quantity);
             // .text((d) =>
             //     (d.data as TreeNode).item.id + ": " + (d.data as TreeNode).n);
-
+        node.filter((d) => (d.data as TreeNode).factory === undefined)
+            .append("text")
+            .attr('x', -40)
+            .attr("y", -20 )
+            .style("text-anchor", "middle")
+            .text((d) => (d.data as TreeNode).quantity);
         //add factory icon
-        node.append("svg")
+        node.filter((d) => (d.data as TreeNode).factory !== undefined)
+            .append("svg")
             .attr("id",
                 (d)=> (d.data as TreeNode).item.id + 'factory')
             .attr('width', "64px")
@@ -107,7 +114,8 @@ export function TreeView(props: Props) {
                 const y = pos[1].substring(0, pos[1].length - 2);
                 return "translate(" + x + "," + y + ")";
             })
-        node.append("text")
+        node.filter((d) => (d.data as TreeNode).factory !== undefined)
+            .append("text")
             .attr('x', 20)
             .attr("y", -20 )
             .style("text-anchor", "middle")

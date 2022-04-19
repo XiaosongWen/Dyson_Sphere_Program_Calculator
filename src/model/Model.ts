@@ -47,6 +47,13 @@ export class Item{
         this.icon = icon;
     }
 }
+export class RawMaterial extends Item {
+    produceTime: number;
+
+    constructor(category: string, id: string, name: string) {
+        super(category, id, name, -1, -1);
+    }
+}
 export class Fuel extends Item {
     readonly fuel_category: string;
     readonly fuel_value : number;
@@ -55,7 +62,7 @@ export class Fuel extends Item {
                 row: number,
                 stack: number, fuel_category: string, value: number) {
         super(category, id, name, row, stack);
-        this.fuel_category = category;
+        this.fuel_category = fuel_category;
         this.fuel_value = value;
     }
 }
@@ -116,7 +123,7 @@ AllCategories.forEach(c => c.setIcon(iconMap.get(c.id)!));
 
 const items = data['items']
 export const itemMap = new Map<string, Item>();
-
+export const AllRawMaterial:RawMaterial[] = [];
 export const AllItems = items.map( i => {
     let item: Item;
     if (i.fuel) {
@@ -134,10 +141,26 @@ export const AllItems = items.map( i => {
     itemMap.set(item.id, item);
     return item;
 });
+
+iconMap.forEach((icon, id) => {
+    const item = AllItems.filter((i)=> i.id === id);
+    if (item.length === 0) {
+        const material = new RawMaterial("Raw Material", id, id);
+        material.setIcon(icon);
+        AllRawMaterial.push(material);
+        itemMap.set(id, material);
+    }
+})
+
 export const AllRecipes: Recipe[] = [];
 
 data['recipes'].forEach(r => {
     const recipe: Recipe = new Recipe(r.id, r.name, r.time);
+    if (itemMap.get(r.id)!.category === "Raw Material"){
+        const rawMaterial = itemMap.get(r.id)! as RawMaterial;
+        rawMaterial.produceTime = recipe.time;
+        recipe.addIn(itemMap.get(r.id)!, recipe.time);
+    }
     if (r.in) {
         Object.entries(r.in).forEach(p => {
             recipe.addIn(itemMap.get(p[0])!, p[1] as number);
@@ -147,7 +170,7 @@ data['recipes'].forEach(r => {
         Object.entries(r.out).forEach(p => {
             recipe.addOut(itemMap.get(p[0])!, p[1] as number);
         })
-    }else {
+    } else {
         recipe.addOut(itemMap.get(r.id)!, 1);
     }
     r.producers.forEach(f => {
@@ -155,8 +178,6 @@ data['recipes'].forEach(r => {
     })
     AllRecipes.push(recipe);
 });
-
-
 
 
 

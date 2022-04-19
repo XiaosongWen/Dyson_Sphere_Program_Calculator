@@ -19,6 +19,7 @@ export class TreeNode {
     }
 }
 
+
 export const buildTree = (items:Item[]) => {
         const item = items[0];
         const node = new TreeNode(item);
@@ -27,33 +28,38 @@ export const buildTree = (items:Item[]) => {
         queue.enqueue(node);
         while (!queue.isEmpty) {
             const cur = queue.dequeue()!;
-            const recipe = AllRecipes.filter((r) => {
-                let produceTarget = false;
-                r.out.forEach((n, item) => {
+            if (cur.item.category !== "Raw Material") {
+                const recipe = AllRecipes.filter((r) => {
+                    let produceTarget = false;
+                    r.out.forEach((n, item) => {
+                        if (item.id === cur.item.id) {
+                            produceTarget = true;
+                        }
+                    });
+                    return produceTarget;
+                })[0];
+                cur.factory = recipe.producers[0];
+                cur.factory_n = cur.quantity / (60 / recipe.time);
+                let output = 1;
+                recipe.out.forEach((n, item) => {
                     if (item.id === cur.item.id) {
-                        produceTarget = true;
+                        output = n;
                     }
-                });
-                return produceTarget;
-            })[0];
-            cur.factory = recipe.producers[0];
-            cur.factory_n = cur.quantity/(60/recipe.time);
-            let output = 1;
-            recipe?.out.forEach((n, item) => {
-                if (item.id === cur.item.id) {
-                    output = n;
-                }
-            })
-            if (recipe?.in) {
-                recipe.in.forEach((input, item) => {
-                    const c = new TreeNode(item);
-                    c.quantity = cur.quantity * (input / output);
-                    cur.children.push(c);
-                    queue.enqueue(c);
                 })
+                if (recipe.in) {
+                    recipe.in.forEach((input, item) => {
+                        const c = new TreeNode(item);
+                        if (item.category === "Raw Material"){
+                            c.quantity = cur.quantity / (60 / input);
+                        }else {
+                            c.quantity = cur.quantity * (input / output);
+                        }
+                        cur.children.push(c);
+                        queue.enqueue(c);
+                    })
+                }
             }
         }
-    console.log(node);
         return node;
 
 }
