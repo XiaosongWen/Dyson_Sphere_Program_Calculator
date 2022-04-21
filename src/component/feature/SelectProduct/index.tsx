@@ -21,7 +21,7 @@ export function SelectProduct(props: Props) {
     }
     return (
         <>
-            <ButtonGroup variant="outlined" >
+            <ButtonGroup variant="outlined" orientation="vertical">
                 <Button size="small"  startIcon={<AddIcon /> } onClick={openSearchGrid}>
                     Add a Product
                 </Button>

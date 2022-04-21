@@ -5,10 +5,10 @@ import {Item} from "../../../model/Model";
 
 import * as d3 from 'd3';
 import "./index.css";
-import {buildTree, TreeNode} from "../../../util/utils"
+import {buildTree, SelectedItem, TreeNode} from "../../../util/utils"
 
 interface Props {
-    selectedData: Item[];
+    selectedData: SelectedItem[];
 }
 
 const margin = {
@@ -17,8 +17,8 @@ const margin = {
     left: 50,
     right: 50,
 };
-const width = 800 - margin.left - margin.right;
-const height = 600 - margin.top - margin.bottom;
+const width = 1200 - margin.left - margin.right;
+const height = 800 - margin.top - margin.bottom;
 
 export function TreeView(props: Props) {
     const ref: React.RefObject<SVGSVGElement> = createRef()
@@ -87,14 +87,7 @@ export function TreeView(props: Props) {
             .attr("y", -20 )
             .style("text-anchor", "middle")
             .text((d) => (d.data as TreeNode).quantity);
-            // .text((d) =>
-            //     (d.data as TreeNode).item.id + ": " + (d.data as TreeNode).n);
-        node.filter((d) => (d.data as TreeNode).factory === undefined)
-            .append("text")
-            .attr('x', -40)
-            .attr("y", -20 )
-            .style("text-anchor", "middle")
-            .text((d) => (d.data as TreeNode).quantity);
+
         //add factory icon
         node.filter((d) => (d.data as TreeNode).factory !== undefined)
             .append("svg")
@@ -102,7 +95,6 @@ export function TreeView(props: Props) {
                 (d)=> (d.data as TreeNode).item.id + 'factory')
             .attr('width', "64px")
             .attr('height', "64px")
-            // .attr("x", '1px')
             .attr("y", '-20px')
             .append("image")
             .attr('xlink:href', require("../../../asset/dsp/icons.png"))
@@ -119,10 +111,10 @@ export function TreeView(props: Props) {
             .attr('x', 20)
             .attr("y", -20 )
             .style("text-anchor", "middle")
-            .text((d) => (d.data as TreeNode).factory_n);
+            .text((d) => Math.ceil((d.data as TreeNode).factory_n));
     }
     return (
-        <Grid item xs={8}>
+        <Grid item xs={12}>
             <Paper
                 sx={{
                     p: 2,
@@ -131,7 +123,7 @@ export function TreeView(props: Props) {
                     height: "100%",
                 }}
             >
-                <svg width="500" height="800" ref={ref} />
+                <svg width="100%" height="100%" ref={ref} />
             </Paper>
         </Grid>
     );

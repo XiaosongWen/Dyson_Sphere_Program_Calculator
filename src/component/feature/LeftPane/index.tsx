@@ -10,13 +10,14 @@ import Typography from "@mui/material/Typography";
 import {SelectProduct} from "../SelectProduct";
 import {Item} from "../../../model/Model";
 import {ProductList} from "../ProductList";
+import {SelectedItem} from "../../../util/utils";
 
-// import {}
 interface Props  {
     open: boolean;
     toggleDrawer:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-    updateSelectedList: (list: Item[]) => void;
-    selectedProduct: Item[];
+    updateProduct: (p: SelectedItem) => void;
+    updateSelectedList: (list: SelectedItem[]) => void;
+    selectedProduct: SelectedItem[];
 }
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -47,15 +48,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export function LeftPane(props: Props) {
-    const {open, toggleDrawer, updateSelectedList, selectedProduct} = props;
+    const {open, toggleDrawer, updateSelectedList, updateProduct, selectedProduct} = props;
     const addProduct = (item: Item) => {
-        if (selectedProduct.indexOf(item) === -1) {
-            const newList: Item[] = [...selectedProduct, item];
+        if ((selectedProduct.filter((p)=> p.item.id === item.id)).length === 0) {
+            const newList: SelectedItem[] = [...selectedProduct, new SelectedItem(item, 60)];
             updateSelectedList(newList);
         }
     }
     const removeProduct = (item: Item) => {
-        updateSelectedList(selectedProduct.filter(p => p.id !== item.id));
+        updateSelectedList(selectedProduct.filter(p => p.item.id !== item.id));
     }
     return (
         <div>
@@ -85,11 +86,11 @@ export function LeftPane(props: Props) {
 
                 <Divider />
 
-                <SelectProduct addProduct={addProduct} />
+                <SelectProduct addProduct={addProduct}  />
 
                 <Divider />
 
-                <ProductList selectedProduct={selectedProduct} removeProduct={removeProduct}/>
+                <ProductList selectedProduct={selectedProduct} removeProduct={removeProduct} updateProduct={updateProduct}/>
             </Drawer>
         </div>
     );

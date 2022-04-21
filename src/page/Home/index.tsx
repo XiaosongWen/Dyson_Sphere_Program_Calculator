@@ -3,20 +3,25 @@ import {Header} from "../../component/feature/Header";
 import {Box, Grid} from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
 import {LeftPane} from "../../component/feature/LeftPane";
-import {GraphView} from "../../component/feature/GraphView";
 import {TreeView} from "../../component/feature/TreeView";
-import {Item} from "../../model/Model";
+import {SelectedItem} from "../../util/utils";
 
-
-type Props = {
-
-};
-
-export function Home(props: Props) {
+export function Home() {
     const [open, setOpen] = useState(true);
-    const [selectedProduct, setSelectedProduct] = useState<Item[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<SelectedItem[]>([]);
 
-    const updateSelectedList = (list: Item[]) => {
+    const updateSelectedList = (list: SelectedItem[]) => {
+        setSelectedProduct(list);
+    }
+    const updateProduct = (p: SelectedItem) => {
+        console.log("updateProduct", p)
+        const list = selectedProduct.map((i) => {
+            if (i.item.id === p.item.id) {
+                i.unit = p.unit;
+                i.speed = p.speed;
+            }
+            return i;
+        })
         setSelectedProduct(list);
     }
     const toggleDrawer = () => {
@@ -30,7 +35,8 @@ export function Home(props: Props) {
                     open={open}
                     toggleDrawer={toggleDrawer}
                     updateSelectedList={updateSelectedList}
-                    selectedProduct={selectedProduct}></LeftPane>
+                    updateProduct={updateProduct}
+                    selectedProduct={selectedProduct} />
 
                 <Box
                     component="main"
@@ -46,7 +52,7 @@ export function Home(props: Props) {
                 >
                     <Toolbar />
                     <Grid container  spacing={2}>
-                            <GraphView selectedProduct={selectedProduct}/>
+                            {/*<GraphView selectedProduct={selectedProduct}/>*/}
                             <TreeView selectedData={selectedProduct}/>
                     </Grid>
                 </Box>

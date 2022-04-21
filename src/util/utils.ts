@@ -3,6 +3,23 @@ import {Queue} from "./queue";
 
 export const getItem = (id:string) => itemMap.get(id);
 
+export enum ProductionSpeedUnit {
+    UNIT_PER_SECOND = "unit/sec",
+    UNIT_PER_MINUTE = "unit/min",
+    UNIT_PER_HOUR = "unit/hr",
+}
+export class SelectedItem {
+    item: Item;
+    speed: number;
+    unit: ProductionSpeedUnit;
+
+    constructor(item: Item, speed: number, unit?:ProductionSpeedUnit) {
+        this.item = item;
+        this.speed = speed;
+        this.unit = unit ? unit : ProductionSpeedUnit.UNIT_PER_MINUTE;
+    }
+
+}
 // export const buildGraph = (items:Item[]) =>{
 //     const target = recipeMap.get(items[0].id);
 //     const list = [];
@@ -20,10 +37,10 @@ export class TreeNode {
 }
 
 
-export const buildTree = (items:Item[]) => {
+export const buildTree = (items:SelectedItem[]) => {
         const item = items[0];
-        const node = new TreeNode(item);
-        node.quantity = 120;
+        const node = new TreeNode(item.item);
+        node.quantity = item.speed;
         const queue: Queue<TreeNode> = new Queue<TreeNode>();
         queue.enqueue(node);
         while (!queue.isEmpty) {
@@ -61,5 +78,13 @@ export const buildTree = (items:Item[]) => {
             }
         }
         return node;
+}
 
+export class K_VObject {
+    key: string;
+    value: string;
+    constructor(key: string, value: string) {
+        this.key = key;
+        this.value = value;
+    }
 }

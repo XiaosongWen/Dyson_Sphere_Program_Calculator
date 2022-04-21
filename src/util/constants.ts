@@ -1,1 +1,1 @@
-export const drawerWidth: number = 320;
+export const drawerWidth: number = 150;

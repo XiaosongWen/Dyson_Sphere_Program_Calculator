@@ -3,19 +3,26 @@ import {Item} from "../../../model/Model";
 import {ShowProduct} from "../ShowProduct";
 
 import List from "@mui/material/List";
+import {SelectedItem} from "../../../util/utils";
 
 interface Props {
-    selectedProduct:Item[];
+    selectedProduct:SelectedItem[];
+    updateProduct: (p: SelectedItem) => void;
     removeProduct: (item:Item) => void;
 }
 
 export function ProductList(props: Props) {
-    const {selectedProduct, removeProduct} = props;
+    const {selectedProduct, updateProduct, removeProduct} = props;
 
     return (
         <List>
         {
-            selectedProduct.map(item => <ShowProduct key={item.id} item={item} removeProduct={removeProduct}/>)
+            selectedProduct.map(product =>
+                <ShowProduct
+                    key={product.item.id}
+                    product={product}
+                    updateProduct={updateProduct}
+                    removeProduct={removeProduct}/>)
         }
         </List>
     );
