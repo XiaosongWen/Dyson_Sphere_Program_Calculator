@@ -53,7 +53,7 @@ export function ShowProduct(props: Props) {
                 <DeleteIcon />
             </IconButton>
             <Logo icon={product.item.icon} click={handleClick} />
-            <Dialog onClose={handleClose} open={open} maxWidth={'xs'} fullWidth style ={{ height: "800px"}}>
+            <Dialog onClose={handleClose} open={open} maxWidth={'xs'} >
                 <DialogTitle>Set Production Speed</DialogTitle>
                 <DialogContent dividers={true} >
                     <DialogContentText >
