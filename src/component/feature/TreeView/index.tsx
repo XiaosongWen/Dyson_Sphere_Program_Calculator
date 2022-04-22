@@ -10,14 +10,7 @@ import { TreeDiagram } from '../../../d3/TreeView';
 interface Props {
     selectedData: SelectedItem[];
 }
-const margin = {
-    top: 50,
-    bottom: 50,
-    left: 50,
-    right: 50,
-};
-const width = 1200 - margin.left - margin.right;
-const height = 800 - margin.top - margin.bottom;
+
 
 export function TreeView(props: Props) {
     const ref: React.RefObject<SVGSVGElement> = createRef()
@@ -25,7 +18,7 @@ export function TreeView(props: Props) {
     useEffect(() => {
         d3.select(ref.current).selectAll('*').remove();
         if (selectedData.length > 0) {
-            const treeMap = new TreeDiagram(width, height, ref);
+            const treeMap = new TreeDiagram(ref);
             treeMap.insertData(selectedData);
             treeMap.drawTree();
         }
@@ -41,7 +34,8 @@ export function TreeView(props: Props) {
                 }}
                 className = "TreeViewPaper"
             >
-                <svg width="100%" height="100%" ref={ref} />
+                <div id="treeViewToolTip"></div>
+                <svg width="100%" height="100%" ref={ref}/>
             </Paper>
         </Grid>
     );

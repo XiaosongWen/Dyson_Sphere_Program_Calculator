@@ -2,6 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import {Icon} from "../../../model/Model"
+import {Tooltip} from "@mui/material";
 
 const  logoSprite = require("../../../asset/dsp/icons.png");
 
@@ -29,6 +30,7 @@ export function Logo(props: Props) {
     }
 
     return (
+        <Tooltip title={icon.id}>
             <IconButton
                 onClick={clickIcon}
                 value = {icon.id}
@@ -38,5 +40,6 @@ export function Logo(props: Props) {
                 }}
             >
             </IconButton>
+        </Tooltip>
     );
 }

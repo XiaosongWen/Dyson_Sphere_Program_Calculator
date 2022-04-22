@@ -19,17 +19,20 @@ class TreeNode {
 }
 const margin = {
     top: 50,
-    bottom: 50,
+    bottom: 40,
     left: 50,
     right: 50,
 };
+const width = 1600 - margin.left - margin.right;
+const height = 800- margin.top - margin.bottom;
+
 export class TreeDiagram {
     readonly treemap: TreeLayout<any>;
     readonly ref: React.RefObject<SVGSVGElement>;
     readonly height: number;
     readonly width: number;
     nodes:  d3.HierarchyNode<TreeNode>;
-    constructor(width: number, height: number, ref: React.RefObject<SVGSVGElement>) {
+    constructor(ref: React.RefObject<SVGSVGElement>) {
         this.treemap = d3.tree().size([width, height]);
         this.ref = ref;
         this.height = height;
@@ -99,7 +102,7 @@ export class TreeDiagram {
                     + " " + d.parent!.x + "," + d.parent!.y;
             });
 
-        const tooltip = d3.select(".TreeViewPaper").append("div")
+        const tooltip = d3.select("#treeViewToolTip")
             .attr("class", "tooltip")
 
         const mouseover = (d:any) => {
