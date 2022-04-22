@@ -21,8 +21,8 @@ const margin = {
     left: 50,
     right: 50,
 };
-const width = 1000 - margin.left - margin.right;
-const height = 800- margin.top - margin.bottom;
+const width = 1600 - margin.left - margin.right;
+const height = 750- margin.top - margin.bottom;
 interface Icon_Spec{
     ratio: number;
     original_width: number;

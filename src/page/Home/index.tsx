@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
 import {Header} from "../../component/feature/Header";
-import {Box, Grid} from "@mui/material";
+import {Box, Grid, Tab, Tabs} from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
 import {LeftPane} from "../../component/feature/LeftPane";
 import {TreeView} from "../../component/feature/TreeView";
 import {SelectedItem} from "../../util/utils";
 import {GraphView} from "../../component/feature/GraphView";
 
+enum DiagramType {
+    TREE = "Tree Diagram",
+    GRAPH = "Network Graph",
+    SANKEY = "Sankey Diagram",
+}
 export function Home() {
     const [open, setOpen] = useState(true);
     const [selectedProduct, setSelectedProduct] = useState<SelectedItem[]>([]);
+    const [vis, setVis] = useState<DiagramType>(DiagramType.TREE);
+
+    const handleChooseVis = (event: React.SyntheticEvent, newValue: DiagramType) => {
+        setVis(newValue);
+    };
 
     const updateSelectedList = (list: SelectedItem[]) => {
         setSelectedProduct(list);
@@ -47,15 +57,33 @@ export function Home() {
                                 ? theme.palette.grey[100]
                                 : theme.palette.grey[900],
                         flexGrow: 1,
-                        height: '100vh',
+                        height: '100%',
                         overflow: 'auto',
                     }}
                 >
                     <Toolbar />
-                    <Grid container  spacing={2}>
-                            <GraphView selectedProduct={selectedProduct}/>
-                            <TreeView selectedData={selectedProduct}/>
-                    </Grid>
+                    <Box sx={{ width: '100%' }}>
+                        <Tabs
+                            value={vis}
+                            onChange={handleChooseVis}
+                            textColor="secondary"
+                            indicatorColor="secondary"
+                            aria-label="secondary tabs example"
+                        >
+                            <Tab value={DiagramType.TREE} label={DiagramType.TREE} />
+                            <Tab value={DiagramType.GRAPH} label={DiagramType.GRAPH} />
+                            <Tab value={DiagramType.SANKEY} label={DiagramType.SANKEY} />
+                        </Tabs>
+                    </Box>
+                    {vis !== DiagramType.TREE ? ("") :
+                        <TreeView selectedData={selectedProduct}/>
+                    }
+                    {vis !== DiagramType.GRAPH ? ("") :
+                        <GraphView selectedProduct={selectedProduct}/>
+                    }
+
+
+
                 </Box>
             </Box>
     );
