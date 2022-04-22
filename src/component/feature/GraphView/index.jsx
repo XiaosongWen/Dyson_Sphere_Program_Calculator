@@ -95,7 +95,7 @@ export function GraphView(props) {
                     height: "100%",
                 }}
             >
-                    {/*<svg width="500" height="500"  id="mysvg" ref={ref} />*/}
+                    <svg width="500" height="500"  id="mysvg" ref={ref} />
             </Paper>
         </Grid>
     );

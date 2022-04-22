@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import {LeftPane} from "../../component/feature/LeftPane";
 import {TreeView} from "../../component/feature/TreeView";
 import {SelectedItem} from "../../util/utils";
+import {GraphView} from "../../component/feature/GraphView";
 
 export function Home() {
     const [open, setOpen] = useState(true);
@@ -52,7 +53,7 @@ export function Home() {
                 >
                     <Toolbar />
                     <Grid container  spacing={2}>
-                            {/*<GraphView selectedProduct={selectedProduct}/>*/}
+                            <GraphView selectedProduct={selectedProduct}/>
                             <TreeView selectedData={selectedProduct}/>
                     </Grid>
                 </Box>

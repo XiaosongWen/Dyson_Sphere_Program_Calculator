@@ -1,11 +1,9 @@
 import React from 'react';
 import {SelectedItem} from "../util/utils";
 import * as d3 from "d3";
-import {AllRecipes, Factory, Item} from "../model/Model";
+import {AllRecipes, Factory, Icon, Item} from "../model/Model";
 import {Queue} from "../util/queue";
 import {TreeLayout} from "d3-hierarchy";
-
-const  logoSprite = require("../asset/dsp/icons.png");
 
 class TreeNode {
     readonly item: Item;
@@ -23,20 +21,36 @@ const margin = {
     left: 50,
     right: 50,
 };
-const width = 1600 - margin.left - margin.right;
+const width = 1000 - margin.left - margin.right;
 const height = 800- margin.top - margin.bottom;
-
+interface Icon_Spec{
+    ratio: number;
+    original_width: number;
+    original_height: number;
+    current_width: number;
+    current_height: number;
+}
 export class TreeDiagram {
     readonly treemap: TreeLayout<any>;
     readonly ref: React.RefObject<SVGSVGElement>;
     readonly height: number;
     readonly width: number;
+    private spec: Icon_Spec;
+
     nodes:  d3.HierarchyNode<TreeNode>;
-    constructor(ref: React.RefObject<SVGSVGElement>) {
+
+    constructor(ref: React.RefObject<SVGSVGElement>, i_w: number, i_h: number) {
         this.treemap = d3.tree().size([width, height]);
         this.ref = ref;
         this.height = height;
         this.width = width;
+        this.spec = {
+            ratio: 1,
+            original_width: i_h,
+            original_height: i_w,
+            current_width: i_h,
+            current_height: i_w,
+        };
     }
 
     insertData(items: SelectedItem[]){
@@ -45,8 +59,10 @@ export class TreeDiagram {
         node.quantity = item.speed;
         const queue: Queue<TreeNode> = new Queue<TreeNode>();
         queue.enqueue(node);
+        let count = 0;
         while (!queue.isEmpty) {
             const cur = queue.dequeue()!;
+            count++;
             if (cur.item.category !== "Raw Material") {
                 const recipe = AllRecipes.filter((r) => {
                     let produceTarget = false;
@@ -80,6 +96,17 @@ export class TreeDiagram {
             }
         }
         this.nodes = d3.hierarchy(node);
+
+        this.setRatio(count > 100 ? 0.5 : 1)
+    }
+    private setRatio(r: number) {
+        this.spec.ratio = r;
+        this.spec.current_height = this.spec.original_height * this.spec.ratio;
+        this.spec.current_width = this.spec.original_width * this.spec.ratio;
+        d3.select("#iconSprite")
+            .attr("transform",
+                "scale("+ this.spec.ratio + " " +  this.spec.ratio+") " +
+                "translate(-832, -832)");
     }
     drawTree(){
         const treeNodes  = this.treemap(this.nodes);
@@ -113,7 +140,7 @@ export class TreeDiagram {
             return tooltip.style("top", (d.clientY +20)+ "px")
                 .style("left",(d.clientX+20)+"px");
         }
-        const mouseout = (d:any) => {
+        const mouseout = () => {
             return tooltip.style("visibility", "hidden");
         }
 
@@ -130,25 +157,18 @@ export class TreeDiagram {
         //add item icon
         node.append("svg")
             .attr("class", "item")
-            .attr('width', 64)
-            .attr('height', 64)
-            .attr("x", -70)
-            .attr("y", -20)
-            .append("image")
-            .attr('xlink:href', logoSprite)
+            .attr('width', this.spec.current_width)
+            .attr('height', this.spec.current_height)
+            .attr("x", -70 * this.spec.ratio)
+            .attr("y", -20 )
+            .append("use")
+            .attr('href', "#iconSprite")
             .attr('id', (d) => (d.data as TreeNode).item.id)
-            .attr('width', 832)
-            .attr('height', 832)
-            .attr("transform", (d) => {
-                const pos = (d.data as TreeNode).item.icon.position.split(" ");
-                const x = pos[0].substring(0, pos[0].length - 2);
-                const y = pos[1].substring(0, pos[1].length - 2);
-                return "translate(" + x + "," + y + ")";
-            })
+            .attr("transform", (d) => this.getPosition((d.data as TreeNode).item!.icon));
 
         node.filter((d) => (d.data as TreeNode).factory !== undefined)
             .append("text")
-            .attr('x', -40)
+            .attr('x', -40 * this.spec.ratio)
             .attr("y", -20 )
             .style("text-anchor", "middle")
             .text((d) => (d.data as TreeNode).quantity);
@@ -157,20 +177,14 @@ export class TreeDiagram {
         node.filter((d) => (d.data as TreeNode).factory !== undefined)
             .append("svg")
             .attr("class", 'factory')
-            .attr('width', 64)
-            .attr('height', 64)
+            .attr('width', this.spec.current_width)
+            .attr('height', this.spec.current_height)
             .attr("y", '-20px')
-            .append("image")
-            .attr('xlink:href', logoSprite)
-            .attr('width', 832)
-            .attr('height', 832)
+            .append("use")
+            .attr('href', "#iconSprite")
             .attr('id', (d) => (d.data as TreeNode).factory.id)
-            .attr("transform", (d) => {
-                const pos = (d.data as TreeNode).factory!.icon.position.split(" ");
-                const x = pos[0].substring(0, pos[0].length - 2);
-                const y = pos[1].substring(0, pos[1].length - 2);
-                return "translate(" + x + "," + y + ")";
-            })
+            .attr("transform", (d) => this.getPosition((d.data as TreeNode).factory!.icon));
+
         node.filter((d) => (d.data as TreeNode).factory !== undefined)
             .append("text")
             .attr('x', 20)
@@ -178,4 +192,11 @@ export class TreeDiagram {
             .style("text-anchor", "middle")
             .text((d) => Math.ceil((d.data as TreeNode).factory_n));
     }
+    private getPosition(icon: Icon) {
+        const pos = icon.position.split(" ");
+        const x = (+pos[0].substring(0, pos[0].length - 2) + 832) * this.spec.ratio;
+        const y = (+pos[1].substring(0, pos[1].length - 2) + 832) * this.spec.ratio;
+        return "translate(" + x + "," + y + ")";
+    }
+
 }
