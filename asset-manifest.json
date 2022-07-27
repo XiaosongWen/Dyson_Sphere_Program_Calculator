@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Dyson_Sphere_Program_Calculator/static/css/main.7c4b1525.css",
+    "main.js": "/Dyson_Sphere_Program_Calculator/static/js/main.5a5b7766.js",
+    "static/media/icons.png": "/Dyson_Sphere_Program_Calculator/static/media/icons.c27902468306f68defd5.png",
+    "index.html": "/Dyson_Sphere_Program_Calculator/index.html",
+    "main.7c4b1525.css.map": "/Dyson_Sphere_Program_Calculator/static/css/main.7c4b1525.css.map",
+    "main.5a5b7766.js.map": "/Dyson_Sphere_Program_Calculator/static/js/main.5a5b7766.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7c4b1525.css",
+    "static/js/main.5a5b7766.js"
+  ]
+}
