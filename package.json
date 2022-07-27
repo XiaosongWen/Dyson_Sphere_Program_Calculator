@@ -2,6 +2,7 @@
   "name": "dyson-sphere-program",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://XiaosongWen.github.io/Dyson_Sphere_Program_Calculator",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -25,6 +26,8 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,6 +53,7 @@
   },
   "devDependencies": {
     "@types/d3": "^7.1.0",
-    "babel-eslint": "^10.1.0"
+    "babel-eslint": "^10.1.0",
+    "gh-pages": "^4.0.0"
   }
 }
