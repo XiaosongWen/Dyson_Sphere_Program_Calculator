@@ -9,12 +9,13 @@ import { TreeDiagram } from '../../../d3/TreeView';
 
 interface Props {
     selectedData: SelectedItem[];
+    display: string;
 }
 const  logoSprite = require("../../../asset/dsp/icons.png");
 
 export function TreeView(props: Props) {
     const ref: React.RefObject<SVGSVGElement> = createRef()
-    const {selectedData} = props;
+    const {selectedData, display} = props;
     useEffect(() => {
         d3.select(ref.current).selectAll('*').remove();
         if (selectedData.length > 0) {
@@ -24,7 +25,7 @@ export function TreeView(props: Props) {
         }
     },[ref, selectedData])
     return (
-        <Grid item xs={12}>
+        <Grid item xs={12} display={display}>
             <Paper
                 sx={{
                     p: 2,

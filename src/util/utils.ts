@@ -20,12 +20,6 @@ export class SelectedItem {
     }
 
 }
-// export const buildGraph = (items:Item[]) =>{
-//     const target = recipeMap.get(items[0].id);
-//     const list = [];
-// }
-
-
 
 export class K_VObject {
     key: string;
@@ -34,4 +28,81 @@ export class K_VObject {
         this.key = key;
         this.value = value;
     }
+}
+
+export class TreeNode {
+    readonly item: Item;
+    readonly children: TreeNode[] = [];
+    quantity: number = 0;
+    factory: Factory;
+    factory_n: number = 0;
+    constructor(item: Item) {
+        this.item = item;
+    }
+}
+
+export const buildTree = (item: SelectedItem) => {   
+    const node = new TreeNode(item.item);
+    node.quantity = item.speed;
+    const queue: Queue<TreeNode> = new Queue<TreeNode>();
+    queue.enqueue(node);
+    while (!queue.isEmpty) {
+        const cur = queue.dequeue()!;
+        // count++;
+        if (cur.item.category !== "Raw Material") {
+            const recipes = AllRecipes.filter((r) => {
+                let produceTarget = false;
+                r.out.forEach((n, item) => {
+                    if (item.id === cur.item.id) {
+                        produceTarget = true;
+                    }
+                });
+                return produceTarget;
+            });
+            // console.log("------------");
+            // console.log(cur.item.name)
+            // console.log(recipes)
+            const recipe = recipes[0];
+            cur.factory = recipe.producers[0];
+            cur.factory_n = cur.quantity / (60 / recipe.time);
+            let output = 1;
+            recipe.out.forEach((n, item) => {
+                if (item.id === cur.item.id) {
+                    output = n;
+                }
+            })
+            if (recipe.in) {
+                recipe.in.forEach((input, item) => {
+                    const c = new TreeNode(item);
+                    if (item.category === "Raw Material"){
+                        c.quantity = cur.quantity / (60 / input);
+                    }else {
+                        c.quantity = cur.quantity * (input / output);
+                    }
+                    cur.children.push(c);
+                    queue.enqueue(c);
+                })
+            }
+        }
+    }
+    return node;
+}
+export const buildList = (items: SelectedItem[]) => {
+    const list: TreeNode[] = [];
+    items.forEach((i)=>list.push(buildTree(i)));
+    return list;
+}
+
+export const getRecipes = ()=> {
+    const recipes = AllRecipes.filter((r) => {
+        let produceTarget = false;
+        r.out.forEach((n, item) => {
+            // if (item.id === id) {
+            //     produceTarget = true;
+            // }
+        });
+        return produceTarget;
+    });
+    console.log(recipes);
+    return recipes;
 }

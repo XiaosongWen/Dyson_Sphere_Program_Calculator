@@ -60,11 +60,12 @@ export class TreeDiagram {
         const queue: Queue<TreeNode> = new Queue<TreeNode>();
         queue.enqueue(node);
         let count = 0;
+        //bfs to find all child node
         while (!queue.isEmpty) {
             const cur = queue.dequeue()!;
             count++;
             if (cur.item.category !== "Raw Material") {
-                const recipe = AllRecipes.filter((r) => {
+                const recipes = AllRecipes.filter((r) => {
                     let produceTarget = false;
                     r.out.forEach((n, item) => {
                         if (item.id === cur.item.id) {
@@ -72,7 +73,11 @@ export class TreeDiagram {
                         }
                     });
                     return produceTarget;
-                })[0];
+                });
+                // console.log("------------");
+                // console.log(cur.item.name)
+                // console.log(recipes)
+                const recipe = recipes[0];
                 cur.factory = recipe.producers[0];
                 cur.factory_n = cur.quantity / (60 / recipe.time);
                 let output = 1;
