@@ -1,69 +1,49 @@
-import { makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { buildList, SelectedItem, TreeNode } from '../../../util/utils';
+import { SelectedItem } from '../../../util/utils';
 import {Grid} from "@mui/material";
 import { MyList } from '../../common/MyList';
+import Paper from "@mui/material/Paper";
+import { Divider } from '@material-ui/core';
 
 type Props = {
     selectedData: SelectedItem[];
     display: string;
 };
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
-    },
-    nested: {
-      paddingLeft: theme.spacing(4),
-    },
-  }));
-
-  
 export function TableView(props: Props) {
     const {selectedData, display} = props;
-    const classes = useStyles();
-    const [open, setOpen] = useState(true);
-    const handleClick = () => {
-        setOpen(!open);
-    };
+    const [show, setShow] = useState(false);
 
     useEffect(()=> {
-    }, [selectedData])
-   
+        setShow(selectedData.length>0);
+    }, [selectedData])   
     
     return (
         <Grid item xs={12} display = {display}>
-            <MyList displayList={selectedData} />
+            {/* Header */}
+            <Paper
+                sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: "100%",
+                }}
+                className = "TreeViewPaper"
+            >
             
-            {/* {
-                list.forEach((item: TreeNode)=> 
-                    
-                )
-            } */}
-                {/* <ListItem button>
-                    <ListItemIcon>
-                        sendicon
-                    </ListItemIcon>
-                    <ListItemText primary="Sent mail" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        drafticon
-                    </ListItemIcon>
-                    <ListItemText primary="Drafts" />
-                </ListItem>
-                <ListItem button onClick={handleClick}>
-                    <ListItemIcon>
-                        inboxIcon
-                    </ListItemIcon>
-                <ListItemText primary="Inbox" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    
+            <Grid container spacing={2} >
+                <Grid item xs={5}>   Item   </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item xs={1}>  Production/s </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item xs={2}>    Factories </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item xs={2}>    Power </Grid>
+            </Grid>
+                {show? <MyList displayList={selectedData} /> : ""}
+                
+                {/* <Collapse in={open} timeout="auto" unmountOnExit>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
                                 <StarBorder />
@@ -78,6 +58,7 @@ export function TableView(props: Props) {
                         </ListItem>
                     
                 </Collapse> */}
+            </Paper>
         </Grid>
     );
 };

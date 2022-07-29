@@ -16,7 +16,7 @@ export class SelectedItem {
     constructor(item: Item, speed: number, unit?:ProductionSpeedUnit) {
         this.item = item;
         this.speed = speed;
-        this.unit = unit ? unit : ProductionSpeedUnit.UNIT_PER_MINUTE;
+        this.unit = unit ? unit : ProductionSpeedUnit.UNIT_PER_SECOND;
     }
 
 }
@@ -59,9 +59,6 @@ export const buildTree = (item: SelectedItem) => {
                 });
                 return produceTarget;
             });
-            // console.log("------------");
-            // console.log(cur.item.name)
-            // console.log(recipes)
             const recipe = recipes[0];
             cur.factory = recipe.producers[0];
             cur.factory_n = cur.quantity / (60 / recipe.time);
@@ -91,18 +88,4 @@ export const buildList = (items: SelectedItem[]) => {
     const list: TreeNode[] = [];
     items.forEach((i)=>list.push(buildTree(i)));
     return list;
-}
-
-export const getRecipes = ()=> {
-    const recipes = AllRecipes.filter((r) => {
-        let produceTarget = false;
-        r.out.forEach((n, item) => {
-            // if (item.id === id) {
-            //     produceTarget = true;
-            // }
-        });
-        return produceTarget;
-    });
-    console.log(recipes);
-    return recipes;
 }

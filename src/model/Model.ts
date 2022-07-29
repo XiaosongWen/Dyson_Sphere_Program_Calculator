@@ -153,6 +153,7 @@ iconMap.forEach((icon, id) => {
 })
 
 export const AllRecipes: Recipe[] = [];
+export const OutMap = new Map<Item, Recipe[]>();
 
 data['recipes'].forEach(r => {
     const recipe: Recipe = new Recipe(r.id, r.name, r.time);
@@ -176,8 +177,17 @@ data['recipes'].forEach(r => {
     r.producers.forEach(f => {
         recipe.addProducer(itemMap.get(f) as Factory);
     })
+    recipe.out.forEach((v: number, k: Item) => {
+        if (!OutMap.has(k)) {
+            const list: Recipe[] = [];
+            OutMap.set(k, list);
+        }
+        OutMap.get(k)!.push(recipe);
+    })
+    
     AllRecipes.push(recipe);
 });
+
 
 
 

@@ -51,7 +51,7 @@ export function LeftPane(props: Props) {
     const {open, toggleDrawer, updateSelectedList, updateProduct, selectedProduct} = props;
     const addProduct = (item: Item) => {
         if ((selectedProduct.filter((p)=> p.item.id === item.id)).length === 0) {
-            const newList: SelectedItem[] = [...selectedProduct, new SelectedItem(item, 60)];
+            const newList: SelectedItem[] = [...selectedProduct, new SelectedItem(item, 1)];
             updateSelectedList(newList);
         }
     }

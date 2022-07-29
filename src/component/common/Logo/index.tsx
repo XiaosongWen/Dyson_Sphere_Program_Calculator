@@ -8,7 +8,7 @@ const  logoSprite = require("../../../asset/dsp/icons.png");
 
 interface Props {
     icon: Icon;
-    click: (name : string) => void;
+    click?: (name : string) => void ;
 }
 const useStyles = makeStyles(() => ({
     icon: {
@@ -26,7 +26,9 @@ export function Logo(props: Props) {
     const classes = useStyles();
 
     const clickIcon = () => {
-        click(icon.id);
+        if (click){
+            click(icon.id);
+        }
     }
 
     return (
